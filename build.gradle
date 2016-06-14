@@ -45,7 +45,7 @@ pluginBundle {
     tags = ['database', 'jpa', 'openjpa']
 
     plugins {
-        scrPlugin {
+        openJpa {
             id = 'neva.openjpa'
             displayName = 'Gradle OpenJPA Plugin'
         }
