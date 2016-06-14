@@ -1,9 +1,26 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.4"
+    }
+}
+
 group 'com.neva.gradle.plugin'
-version '1.0.0-SNAPSHOT'
+version '1.0.0'
 defaultTasks = ['clean', 'install']
 
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'com.gradle.plugin-publish'
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
 
 dependencies {
     compile gradleApi()
@@ -12,16 +29,25 @@ dependencies {
     compile 'org.apache.openjpa:openjpa:2.3.0'
 }
 
-repositories {
-    jcenter()
-    mavenCentral()
-}
-
 jar {
     sourceCompatibility = 1.6
     targetCompatibility = 1.6
 
     compileJava {
         options.encoding = "UTF-8"
+    }
+}
+
+pluginBundle {
+    website = 'http://javarel.neva.zone/'
+    vcsUrl = 'https://github.com/neva-dev/gradle-openjpa-plugin'
+    description = 'Plugin for enhancing JPA entity classes at compile time to be ready for OpenJPA. Especially useful when combined with Javarel Framework'
+    tags = ['database', 'jpa', 'openjpa']
+
+    plugins {
+        scrPlugin {
+            id = 'neva.openjpa'
+            displayName = 'Gradle OpenJPA Plugin'
+        }
     }
 }
