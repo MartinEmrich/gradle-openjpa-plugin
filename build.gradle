@@ -9,13 +9,13 @@ buildscript {
     }
 }
 
-group 'com.neva.gradle.plugin'
-version '1.0.0'
-defaultTasks = ['clean', 'install']
-
 apply plugin: 'groovy'
-apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'com.gradle.plugin-publish'
+
+group = 'com.neva.gradle.plugin'
+version = '1.0.1'
+defaultTasks = ['clean', 'install']
 
 repositories {
     jcenter()
@@ -26,7 +26,7 @@ dependencies {
     compile gradleApi()
     compile localGroovy()
 
-    compile 'org.apache.openjpa:openjpa:2.3.0'
+    compile 'org.apache.openjpa:openjpa:2.4.1'
 }
 
 jar {
@@ -35,6 +35,14 @@ jar {
 
     compileJava {
         options.encoding = "UTF-8"
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
     }
 }
 

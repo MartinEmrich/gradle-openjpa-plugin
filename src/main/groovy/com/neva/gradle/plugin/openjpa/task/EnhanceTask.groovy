@@ -8,12 +8,15 @@ class EnhanceTask extends AbstractTask {
 
     static final NAME = "enhanceEntities"
 
+    def includeFilter = {
+        include '**/*Entity.class'
+    }
+
     EnhanceTask() {
         description = "Enhance JPA entity classes using OpenJPA Enhancer"
 
         configure {
-            outputs.upToDateWhen { false }
-
+            inputs.dir(inputDir)
             dependsOn([project.compileJava, project.processResources])
             project.classes.dependsOn this
         }
@@ -22,9 +25,7 @@ class EnhanceTask extends AbstractTask {
     @TaskAction
     def run() {
         // define the entity classes
-        def entityFiles = project.fileTree(project.sourceSets.main.output.classesDir).matching {
-            include '**/*.class'
-        }
+        def entityFiles = project.fileTree(inputDir).matching(this.includeFilter)
 
         println "Enhancing with OpenJPA, the following files..."
         entityFiles.getFiles().each {
@@ -49,6 +50,10 @@ class EnhanceTask extends AbstractTask {
         ) {
             entityFiles.addToAntBuilder(ant, 'fileset', FileCollection.AntType.FileSet)
         }
+    }
+
+    def getInputDir() {
+        return project.sourceSets.main.output.classesDir
     }
 
 }

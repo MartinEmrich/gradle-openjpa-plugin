@@ -17,3 +17,22 @@ Plugin for enhancing JPA entity classes at compile time to be ready for OpenJPA.
 ## License
 
 Apache License 2.0
+
+## Usage
+
+By default, plugin enhances all classes that have suffix `Entity`, e.g `UserEntity`, `PostEntity` etc.
+But that behavior can be customized to any needs, see below example.
+
+```
+
+apply plugin: 'neva.openjpa'
+
+enhanceEntities {
+
+    includeFilter = {
+        include '**/*Entity.class'
+    }
+
+}
+
+```
