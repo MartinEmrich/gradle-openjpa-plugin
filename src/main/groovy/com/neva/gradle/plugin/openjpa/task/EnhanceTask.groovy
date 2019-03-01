@@ -53,7 +53,7 @@ class EnhanceTask extends AbstractTask {
     }
 
     def getInputDir() {
-        return project.sourceSets.main.output.classesDir
+        return project.sourceSets.main.output.classesDirs
     }
 
 }
